@@ -1,3 +1,7 @@
+# python
+/env_opencv/
+
+
 # Miscellaneous
 *.class
 *.log
@@ -30,7 +34,6 @@
 .pub-cache/
 .pub/
 /build/
-/env_opencv/
 
 # Web related
 lib/generated_plugin_registrant.dart
