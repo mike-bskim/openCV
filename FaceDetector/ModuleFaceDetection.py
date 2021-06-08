@@ -56,7 +56,7 @@ class FaceDetector():
 
 def main():
     cap = cv2.VideoCapture(0)
-    # cap = cv2.VideoCapture('D:\\youtube\\openCV_test03.mp4')
+    cap = cv2.VideoCapture('D:\\youtube\\openCV_test03.mp4')
 
     pTime = 0
     detector = FaceDetector()
