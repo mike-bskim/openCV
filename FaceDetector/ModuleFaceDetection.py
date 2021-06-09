@@ -5,7 +5,7 @@ import imutils
 
 
 class FaceDetector():
-    def __init__(self, minDetectionCon=0.70):
+    def __init__(self, minDetectionCon = 0.70):
 
         self.minDetectionCon = minDetectionCon
 
