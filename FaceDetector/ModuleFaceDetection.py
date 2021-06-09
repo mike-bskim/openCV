@@ -1,10 +1,11 @@
 import cv2
 import mediapipe as mp
 import time
+import imutils
 
 
 class FaceDetector():
-    def __init__(self, minDetectionCon=0.75):
+    def __init__(self, minDetectionCon=0.70):
 
         self.minDetectionCon = minDetectionCon
 
@@ -20,7 +21,7 @@ class FaceDetector():
         bboxs = []
         if self.results.detections:
             for id, detection in enumerate(self.results.detections):
-                self.mpDraw.draw_detection(img, detection)
+                # self.mpDraw.draw_detection(img, detection)
                 bboxC = detection.location_data.relative_bounding_box
                 ih, iw, ic = img.shape
                 bbox = int(bboxC.xmin * iw), int(bboxC.ymin * ih), \
@@ -34,7 +35,7 @@ class FaceDetector():
                             2, (255, 0, 255), 2)
         return img, bboxs
 
-    def fancyDraw(self, img, bbox, l=30, t=4, rt= 1):
+    def fancyDraw(self, img, bbox, l=20, t=4, rt= 1):
         x, y, w, h = bbox
         x1, y1 = x + w, y + h
 
@@ -56,7 +57,13 @@ class FaceDetector():
 
 def main():
     cap = cv2.VideoCapture(0)
-    cap = cv2.VideoCapture('D:\\youtube\\openCV_test03.mp4')
+    cap = cv2.VideoCapture('D:\\youtube\\3.mp4')
+
+    # 프레임 너비/높이, 초당 프레임 수 확인
+    width = cap.get(cv2.CAP_PROP_FRAME_WIDTH) # 또는 cap.get(3)
+    height = cap.get(cv2.CAP_PROP_FRAME_HEIGHT) # 또는 cap.get(4)
+    fps = cap.get(cv2.CAP_PROP_FPS) # 또는 cap.get(5)
+    print('프레임 너비: %d, 프레임 높이: %d, 초당 프레임 수: %d' %(width, height, fps))    
 
     pTime = 0
     detector = FaceDetector()
@@ -68,9 +75,11 @@ def main():
         cTime = time.time()
         fps = 1 / (cTime - pTime)
         pTime = cTime
-        cv2.putText(img, f'FPS: {int(fps)}', (20, 70), cv2.FONT_HERSHEY_PLAIN, 3, (0, 255, 0), 2)
+        cv2.putText(img, f'FPS: {int(fps)}', (20, 70), cv2.FONT_HERSHEY_PLAIN, 3, (0, 0, 0), 2)
+        # 프레임 resize
+        img = imutils.resize(img, width=1024)
         cv2.imshow("Image", img)
-        cv2.waitKey(1)
+        cv2.waitKey(10)
 
 
 if __name__ == "__main__":
